@@ -62,7 +62,6 @@ public class GameConsole {
 
   /** display a representation of the board to the console */
   public static void printBoard(Board board) {
-    System.out.print("\033[H\033[2J");    
     printRow(board, 0);
     System.out.println("-----------");
     printRow(board, 1);
@@ -76,6 +75,11 @@ public class GameConsole {
     getSymbol(board, row, 0),
     getSymbol(board, row, 1),
     getSymbol(board, row, 2) );
+  }
+
+  /** clears terminal screen */
+  public static void clearScreen() {
+    System.out.print("\033[H\033[2J");  
   }
 
   /** @return the Symbol at a given board square */
