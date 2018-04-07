@@ -9,7 +9,7 @@ public class TicTacToe {
   public static void main(String[] args) {
     // Initialize board and players  
     Board board = new Board();
-    Players players = new Players(new HumanPlayer(), new ComputerPlayer());
+    Players players = new Players(new HumanPlayer(), new ComputerPlayer(2));
 
     Scanner input = new Scanner(System.in);
     // Display initial game board
@@ -34,8 +34,15 @@ public class TicTacToe {
       GameConsole.printBoard(board);
 
       // If player won, exit;
-      if (GameLogic.checkWin(board, players.currentPlayer())) 
-        quit = true;
+      if (GameLogic.checkWin(board, players.currentPlayer())) {
+        System.out.println("Player " + players.getCurrentName() + " is the winner!");
+        System.exit(0);
+      }
+      // If there is a tie, exit
+      if(GameLogic.checkTie(board)) {
+        System.out.println("There was a tie!");
+        System.exit(1);
+      }
 
       // Switch player turns
       players.flip();
