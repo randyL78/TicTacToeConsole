@@ -19,8 +19,15 @@ public class TicTacToe {
     // Loop taking turns until user quits
     boolean quit = false;
     do {
-      // Take turn and determine if user quit
-      quit = GameConsole.takeTurn(board, players, input);
+      // Check if current player is human
+      if (players.players[players.currentPlayer()].isHuman()) {
+        // Take turn and determine if user quit
+        quit = GameConsole.takeTurn(board, players, input);
+      } else {
+        // Take computer turn
+        AI.takeTurn(board, players);
+      }
+
 
       // Display the game board in current state
       GameConsole.clearScreen();
