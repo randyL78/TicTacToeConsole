@@ -78,4 +78,17 @@ public class GameLogic {
     return won;
   }
 
+  /** check for a tie */
+  public static boolean checkTie(Board board) {
+    // if board is full, return true;
+    for (int i = 0; i < 3; i++) {
+      for (int j = 0; j < 3; j++) {
+        // if any square is unowned, there is not a tie so return false
+        if (board.isEmptyAt(i, j))
+          return false;
+      }
+    }
+    return true;
+  }
+
 }
