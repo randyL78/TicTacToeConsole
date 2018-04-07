@@ -4,7 +4,7 @@
  */
 public class ComputerPlayer extends Player {
   // Set the maximum difficulty range, will have only 2 modes to start (0, 1)
-  public static final int MAX_DIFFICULTY = 1;
+  private static final int MAX_DIFFICULTY = AI.MAX_DIFFICULTY;
   private int difficulty;
   private final static String NAME = "Computer";
 
