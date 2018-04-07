@@ -9,19 +9,35 @@ public class AI {
     // Get the difficulty level of current computer player
     int difficulty = ((ComputerPlayer) (players.players[players.currentPlayer()])).getDifficulty();
 
-    switch (difficulty) {
-      case 0:
-        easyTurn(board, players.currentPlayer());
-        break;
-      case 1:
-        mediumTurn(board, players.currentPlayer());
-        break;
-      case 2:
-        hardTurn(board, players.currentPlayer());
-        break;
-      default:
-        throw new IllegalArgumentException("Difficulty must be in the range of 0 - " + MAX_DIFFICULTY);
+    // get current player
+    int player = players.currentPlayer();
+
+    // get opposite player
+    int opponent = (player == 0) ? 1 : 0;
+
+  // Basic Strategy *****************************************
+    // 1. always go for middle on first move. (medium/hard)
+    // 2. check if there is a win on this move, if so make winning move (hard)
+    // 3. check if opponent can win on this move, if so block win (medium/hard)
+    // 4. randomly choose from remainder of board (easy/medium/hard)
+
+
+    // Check if middle square is owned, if not take it (medium/hard)
+    if (checkMiddle(board) && difficulty > 0) {
+      board.setOwner(player, 1, 1);
+    // if player can win on this move, go for win (hard)
+    } else if (canWin(board, player) != null && difficulty == 2) {
+      int[] position = canWin(board, player);
+      board.setOwner(player, position[0], position[1]);   
+    // check if opponent can win on this move, if so block win (medium/hard)
+    } else if (canWin(board, opponent) != null && difficulty > 0) {
+      int[] position = canWin(board, opponent);
+      board.setOwner(player, position[0], position[1]);
+    } else {
+      // randomly choose square (all)
+      easyTurn(board, player);
     }
+
   }
 
   private static void easyTurn(Board board, int player) {
@@ -64,10 +80,10 @@ public class AI {
 
   private static void hardTurn(Board board, int player) {
   // Basic Strategy *****************************************
-    // 1. always go for middle on first move. 
-    // 2. check if there is a win on this move, if so make winning move
-    // 3. check if opponent can win on this move, if so block win
-    // 4. randomly choose from remainder of board
+    // 1. always go for middle on first move. (medium/hard)
+    // 2. check if there is a win on this move, if so make winning move (medium/hard)
+    // 3. check if opponent can win on this move, if so block win (hard)
+    // 4. randomly choose from remainder of board (easy/medium/hard)
 
     // get opposite player
     int opponent = (player == 0) ? 1 : 0;
