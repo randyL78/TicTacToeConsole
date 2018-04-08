@@ -11,6 +11,60 @@ public class GameConsole {
   private static final String SYMBOL2 = "O";
 
   /* ============= methods ================ */
+  /**
+   * @return name of the player from user input
+   */
+  private static String enterName(Scanner input) {
+    System.out.print("Please enter your name: ");
+    return input.nextLine();
+  }
+
+  /** 
+   * Uses input to determine 2 player types, names, etc 
+   * @return the 2 players
+   */
+  public static Players getPlayers(Scanner input) {
+    Player player1 = new HumanPlayer(enterName(input));
+    Player player2 = null;
+
+    // Prompt user to select type of second player
+    System.out.println("Would you like to play against the computer or another human?");
+  
+    do {
+      System.out.print("Please enter \"human\" or \"computer\": ");
+      String playerType = input.nextLine();
+      if (playerType.toLowerCase().equals("human"))
+        // create a second human player
+        player2 = new HumanPlayer(enterName(input));
+      else if (playerType.toLowerCase().equals("computer")) 
+        // creates a new computer player with selected difficulty
+        player2 = new ComputerPlayer(selectDifficulty());
+      else 
+        System.out.println("Invalid selection");
+    } while (player2 == null);
+
+    // Prompt use to select playing order
+    while (true) {
+      System.out.println("Would you like to go first? (Y/n) ");
+      String answer = input.next();
+
+      if (answer.toLowerCase().equals("y"))
+        return new Players(player1, player2);
+      else if (answer.toLowerCase().equals("n")) 
+        return new Players(player2, player1);
+      else 
+        System.out.println("Invalid selection, please try again.");
+    } 
+  }
+
+  /** 
+   * prompts user to select computer difficulty
+   * @return the computer difficulty level
+   */
+  private static int selectDifficulty() {
+    return 2;
+  }
+
   /** 
    * handle a user input turn 
    * @param board the current game board
