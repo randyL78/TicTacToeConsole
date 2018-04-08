@@ -21,7 +21,6 @@ public class AI {
     // 3. check if opponent can win on this move, if so block win (medium/hard)
     // 4. randomly choose from remainder of board (easy/medium/hard)
 
-
     // Check if middle square is owned, if not take it (medium/hard)
     if (checkMiddle(board) && difficulty > 0) {
       board.setOwner(player, 1, 1);
@@ -56,55 +55,6 @@ public class AI {
 
   }
   
-  private static void mediumTurn(Board board, int player) {
-  // Basic Strategy *****************************************
-    // 1. always go for middle on first move. 
-    // 2. check if opponent can win on this move, if so block win
-    // 3. randomly choose from remainder of board
-
-    // get opposite player
-    int opponent = (player == 0) ? 1 : 0;
-    // Check if middle square is owned, if not take it
-    if (checkMiddle(board))
-      board.setOwner(player, 1, 1);
-    // check if opponent can win on this move, if so block win
-    else if (canWin(board, opponent) != null) {
-      int[] position = canWin(board, opponent);
-      board.setOwner(player, position[0], position[1]);
-    } else {
-      // randomly choose square
-      easyTurn(board, player);
-    }
-
-  }
-
-  private static void hardTurn(Board board, int player) {
-  // Basic Strategy *****************************************
-    // 1. always go for middle on first move. (medium/hard)
-    // 2. check if there is a win on this move, if so make winning move (medium/hard)
-    // 3. check if opponent can win on this move, if so block win (hard)
-    // 4. randomly choose from remainder of board (easy/medium/hard)
-
-    // get opposite player
-    int opponent = (player == 0) ? 1 : 0;
-    // Check if middle square is owned, if not take it
-    if (checkMiddle(board)) {
-      board.setOwner(player, 1, 1);
-    // if player can win on this move, go for win
-    } else if (canWin(board, player) != null) {
-      int[] position = canWin(board, player);
-      board.setOwner(player, position[0], position[1]);   
-    // check if opponent can win on this move, if so block win
-    } else if (canWin(board, opponent) != null) {
-      int[] position = canWin(board, opponent);
-      board.setOwner(player, position[0], position[1]);
-    } else {
-      // randomly choose square
-      easyTurn(board, player);
-    }
-
-  }
-
   /** check if middle of board is open */
   private static boolean checkMiddle(Board board) {
     if (board.isEmptyAt(1, 1)) {
@@ -188,10 +138,6 @@ public class AI {
       else if (board.getOwner(2, 0) == player && board.getOwner(0, 2) == player)
         return middle;
     }
-
     return null;
-  }
-
-
-  
+  }  
 }

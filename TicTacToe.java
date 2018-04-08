@@ -7,11 +7,15 @@ import java.util.Scanner;
  */
 public class TicTacToe {
   public static void main(String[] args) {
-    // Initialize board and players  
-    Board board = new Board();
-    Players players = new Players(new HumanPlayer(), new ComputerPlayer(2));
 
     Scanner input = new Scanner(System.in);
+
+    System.out.println("Welcome to Tic-Tac-Toe");
+
+    // Initialize board and players  
+    Board board = new Board();
+    Players players = GameConsole.getPlayers(input);
+
     // Display initial game board
     GameConsole.clearScreen();
     GameConsole.printBoard(board);
@@ -27,7 +31,6 @@ public class TicTacToe {
         // Take computer turn
         AI.takeTurn(board, players);
       }
-
 
       // Display the game board in current state
       GameConsole.clearScreen();

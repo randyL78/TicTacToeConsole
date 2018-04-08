@@ -1,5 +1,3 @@
-import java.sql.SQLFeatureNotSupportedException;
-
 /**
  * GameLogic
  * Class for testing board to check for wins 
@@ -37,7 +35,7 @@ public class GameLogic {
     return true;
   }
 
-  /** checks if player won with three in a row*/
+  /** checks if player won with three in a row */
   private static boolean checkColumns(Board board, int currentPlayer) {
     boolean won = false;
     // loop through each column and check for winner
@@ -58,24 +56,24 @@ public class GameLogic {
 
   /** check diagonal with negative slope for win */
   private static boolean checkDecreaseDiagonal(Board board, int currentPlayer) {
-    boolean won = true;
-    
+    // loop through each square on the diagonal
+    // if any square doesn't belong to the current player, return false
     for (int i = 0; i < 3; i++) {
       if (board.getOwner(i, i) != currentPlayer)
         return false;
     }
-    return won;
+    return true;
   }
 
   /** check diagonal with positive slope for win */
   private static boolean checkIncreaseDiagonal(Board board, int currentPlayer) {
-    boolean won = true;
-    
+    // loop through each square on the diagonal
+    // if any square doesn't belong to the current player, return false
     for (int i = 0; i < 3; i++) {
       if (board.getOwner(i, 2 - i) != currentPlayer)
         return false;
     }
-    return won;
+    return true;
   }
 
   /** check for a tie */
