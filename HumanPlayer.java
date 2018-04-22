@@ -1,14 +1,17 @@
+import java.io.Serializable;
+
 /**
  * HumanPlayer
  * @author Randy Layne
  */
-public class HumanPlayer extends Player {
+public class HumanPlayer extends Player implements Serializable {
   // ========== fields ==============
   private String name;
   private int wins;
   private int losses;
   private int ties;
   private static int count;
+  private static final long serialVersionUID = -1099474242691759322L;
    
   // ========= constructors =========
   public HumanPlayer() {
@@ -94,8 +97,13 @@ public class HumanPlayer extends Player {
   }
 
   @Override
+  public String getName() {
+    return name;
+  }
+
+  @Override
   public String toString() {
-    return String.format("Player named %s with %d wins %d losses and %d ties", name, wins, losses, ties);
+    return String.format("Player %s has %d wins %d losses and %d ties", name, wins, losses, ties);
   }
   
 }

@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -27,20 +28,40 @@ public class GameConsole {
     Player player1 = new HumanPlayer(enterName(input));
     Player player2 = null;
 
+    // Attempt to load player from file
+    try {
+      player1 = FileActions.loadPlayer((HumanPlayer) player1);
+    } catch (IOException ex) {
+      System.out.println("Player not found, creating a new player");
+    }
+    // Display scores
+    System.out.println(player1);
+
     // Prompt user to select type of second player
     System.out.println("Would you like to play against the computer or another human?");
   
     do {
       System.out.print("Please enter \"human\" or \"computer\": ");
       String playerType = input.nextLine();
-      if (playerType.toLowerCase().equals("human"))
+      if (playerType.toLowerCase().equals("human")) {
         // create a second human player
         player2 = new HumanPlayer(enterName(input));
-      else if (playerType.toLowerCase().equals("computer")) 
+        // Attempt to load player from file
+        try {
+          player2 = FileActions.loadPlayer((HumanPlayer) player2);
+        } catch (IOException ex) {
+          System.out.println("Player not found, creating a new player");
+        }
+        // Display scores
+        System.out.println(player2);
+
+
+      } else if (playerType.toLowerCase().equals("computer")) {
         // creates a new computer player with selected difficulty
         player2 = new ComputerPlayer(selectDifficulty());
-      else 
+      } else {
         System.out.println("Invalid selection");
+      }
     } while (player2 == null);
 
     // Prompt use to select playing order
@@ -103,10 +124,9 @@ public class GameConsole {
         } else 
           System.out.println("Sorry, that square is taken, please choose an empty square");
 
-
-
       } catch (java.lang.NumberFormatException ex) {
         System.out.println("Please enter only numbers or \"Q\"");
+
       } catch (ArrayIndexOutOfBoundsException ex) {
         System.out.println("Please keep numbers between 1 and 3");
       }
@@ -142,5 +162,25 @@ public class GameConsole {
     return (board.getOwner(row, col) == 0) ? SYMBOL1 : SYMBOL2;
   else
     return " ";
+  }
+
+  /** check to see if players would like to play a new game */
+  public static boolean askToPlayAgain(Scanner input) {
+    // variable to store whether or not to play again, intitially set to false
+    boolean playAgain = false;
+
+    // loop until users enters a valid answer
+    boolean answered = false;
+    while (!answered && !playAgain) {
+      System.out.print("Would you like to play again? (Y/n)");
+      char answerChar = input.next().toLowerCase().toCharArray()[0];
+      // if user types a y or Y return true and exit loop
+      if (answerChar == 'y') 
+        playAgain = true;
+      // if user enters a n or N return false and exit loop
+      else if (answerChar == 'n')
+        answered = true;
+    }
+    return playAgain;
   }
 }
