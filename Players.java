@@ -48,6 +48,13 @@ public class Players {
   }
 
   /**
+   * @return the index of the player opposite current player
+   */
+  public int oppositePlayer() {
+    return (firstPlayerTurn) ? 1 : 0;
+  }
+
+  /**
    * replace the Player at given index
    */
   public void replace(Player player, int index) {

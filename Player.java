@@ -1,9 +1,11 @@
+import java.io.Serializable;
+
 /**
  * Player
  * Base Player class for Tic Tac Toe players
  * @author Randy Layne
  */
-public class Player {
+public class Player  {
   private boolean isHuman;
   protected String name;
 
