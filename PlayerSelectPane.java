@@ -8,6 +8,7 @@ import javafx.geometry.Insets;
 /** 
  * PlayerSelectionPane
  * defines a verticle box pane for housing player selection data
+ * @author Randy Layne
  */
 class PlayerSelectPane extends VBox {
   private static int count;
