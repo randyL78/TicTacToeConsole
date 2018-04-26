@@ -32,6 +32,11 @@ public class TicTacToe extends Application {
   @Override
   public void start(Stage primaryStage) throws Exception {
     // Create 2 scenes, one for Intro the other for playing game
+    /* 
+     * Create the main layout pane for game
+     */
+    BorderPane pnMain = new BorderPane();
+    
 
     /*
      * Create an introduction stage where users can select their name and opponent
@@ -82,16 +87,24 @@ public class TicTacToe extends Application {
       } else {
         try {
           // Load player 1 into Players
-          players.replace(FileActions.loadPlayer(new HumanPlayer(player1Pane.getName())), 1);
+          players.replace(FileActions.loadPlayer(new HumanPlayer(player2Pane.getName())), 1);
         } catch (IOException ex) {
           // If there is an error, just create a new player based on field name
-          players.replace(new HumanPlayer(player1Pane.getName()), 1);
+          players.replace(new HumanPlayer(player2Pane.getName()), 1);
         }
       }
 
-      System.out.println(players.players[0]);
-      System.out.println(players.players[1]);
+      // Initialize board and game
+      
+      // Create panes to display scores
+      ScoresPane player1ScoresPane = new ScoresPane(players.players[0]);
+      pnMain.setLeft(player1ScoresPane);
 
+      ScoresPane player2ScoresPane = new ScoresPane(players.players[1]);
+      pnMain.setRight(player2ScoresPane);
+   
+
+      // Show main screen and close intro screen
       primaryStage.show();
       introStage.close();
     });
@@ -121,9 +134,10 @@ public class TicTacToe extends Application {
      */
     // Use a gridpane to lay out the board
     GridPane boardPane = new GridPane();
+    pnMain.setCenter(boardPane);
 
     // Create scene and add to the stage
-    Scene scene = new Scene(boardPane, 800, 600);
+    Scene scene = new Scene(pnMain, 800, 600);
     primaryStage.setTitle("Tic Tac Toe!");
     primaryStage.setScene(scene);
   
@@ -211,7 +225,8 @@ class PlayerSelectPane extends VBox {
     // see if checkbox is checked
     if (!chkHuman.isSelected()) 
       return "Computer";
-    else if (txtPlayer.getText().equalsIgnoreCase("name")) 
+    else if (txtPlayer.getText().equalsIgnoreCase("name") || 
+             txtPlayer.getText().equalsIgnoreCase(""))
       // default to player number
       return "Player_" + number;
     else 
@@ -228,5 +243,42 @@ class PlayerSelectPane extends VBox {
       return -1;
     else 
       return cbDifficulty.getSelectionModel().getSelectedIndex();
+  }
+}
+
+//---------------------------------------------------------------------------------
+
+/** 
+ * ScoresPane
+ * defines a verticle box pane for housing player scores in main game
+ */
+class ScoresPane extends VBox {
+  public ScoresPane(Player player) {
+    System.out.println(player.getName());
+    // Display name
+    Text nameText = new Text(player.getName());
+    nameText.setFont(Font.font("Times New Roman", FontWeight.BOLD, 32));
+    getChildren().addAll(nameText);
+
+    if (player.isHuman()) {
+      // Display scores of human players
+      // Wins
+      Text winsLabel = new Text("Wins:");
+      Text winsText = new Text("" + ((HumanPlayer) player).getWins());
+      // Losses
+      Text lossesLabel = new Text("Losses:");
+      Text lossesText = new Text("" + ((HumanPlayer) player).getLosses());
+      // Ties
+      Text tiesLabel = new Text("Ties:");
+      Text tiesText = new Text("" + ((HumanPlayer) player).getTies());
+
+      getChildren().addAll(winsLabel, winsText, lossesLabel, lossesText, tiesLabel, tiesText);
+    } 
+
+    // set pane styling
+    setStyle("-fx-background-color: aqua");
+    setSpacing(5);
+    setPadding(new Insets(5, 10, 0, 10));
+    setMinWidth(170);
   }
 }
