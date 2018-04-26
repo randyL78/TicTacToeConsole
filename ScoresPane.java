@@ -5,6 +5,7 @@ import javafx.geometry.Insets;
 /** 
  * ScoresPane
  * defines a verticle box pane for housing player scores in main game
+ * @author Randy Layne
  */
 public class ScoresPane extends VBox {
   public ScoresPane(Player player) {

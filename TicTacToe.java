@@ -14,17 +14,28 @@ import javafx.stage.Stage;
  */
 public class TicTacToe extends Application {
   public Players players;
+  
+  // Initialize  game board
+  private Board board = new Board();
+
+  // Initialize board squares
+  private SquarePane[][] squares = new SquarePane[3][3];
+
+
   /** Main entry point into application */
   @Override
   public void start(Stage primaryStage) throws Exception {
-    // Initialize game board
-    Board board = new Board();
+
+
 
     // Create 2 scenes, one for Intro the other for playing game
 
     /* 
      * Set up primary stage components 
      */
+
+     // =========== board and square elements ===========
+
     // Set up main layout pane for primary stage
     BorderPane pnMain = new BorderPane();
 
@@ -32,8 +43,31 @@ public class TicTacToe extends Application {
     GridPane boardPane = new GridPane();
     pnMain.setCenter(boardPane);
 
+
+    // add board squares
+    for (int i = 0; i < 3; i++) {
+      for (int j = 0; j < 3; j++) {
+        boardPane.add(squares[i][j] = new SquarePane(), j, i);
+      }
+    }
+
+    // =========== bottom buttons =======================
+    // Create quit button
+    Button btnQuitMain = new Button("Quit");
+    btnQuitMain.setOnAction(e -> {
+      System.exit(1);
+    });
+
+    // Create an hbox to house quit button
+    HBox hboxForMainButtons = new HBox(5, btnQuitMain);
+    hboxForMainButtons.setAlignment(Pos.CENTER);
+    hboxForMainButtons.setPadding(new Insets(5, 5, 5, 5));
+    pnMain.setBottom(hboxForMainButtons);
+
+
+
     // Create scene and add to the stage
-    Scene scene = new Scene(pnMain, 800, 600);
+    Scene scene = new Scene(pnMain, 800, 500);
     primaryStage.setTitle("Tic Tac Toe!");
     primaryStage.setScene(scene);
     
@@ -94,9 +128,6 @@ public class TicTacToe extends Application {
         }
       }
 
-
-      
-      
       // Create panes to display scores
       ScoresPane player1ScoresPane = new ScoresPane(players.players[0]);
       pnMain.setLeft(player1ScoresPane);
