@@ -5,6 +5,8 @@ import javafx.scene.layout.*;
 import javafx.geometry.*;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
@@ -16,6 +18,8 @@ import javafx.beans.property.SimpleIntegerProperty;
  */
 public class TicTacToe extends Application {
   public Players players;
+  private ScoresPane player1ScoresPane;
+  private ScoresPane player2ScoresPane;
   
   // Initialize  game board
   private Board board = new Board();
@@ -125,10 +129,10 @@ public class TicTacToe extends Application {
       }
 
       // Create panes to display scores
-      ScoresPane player1ScoresPane = new ScoresPane(players.players[0]);
+      player1ScoresPane = new ScoresPane(players.players[0]);
       pnMain.setLeft(player1ScoresPane);
 
-      ScoresPane player2ScoresPane = new ScoresPane(players.players[1]);
+      player2ScoresPane = new ScoresPane(players.players[1]);
       pnMain.setRight(player2ScoresPane);
    
       // add board squares
@@ -164,7 +168,88 @@ public class TicTacToe extends Application {
     introStage.show();
     
 
-   // Create an eventlistener for the gameover value
+    // Create an eventlistener for the gamestatus value
+    gameStatus.addListener(new InvalidationListener() {
+      @Override
+      public void invalidated(Observable observable) {
+        // check to make sure game is not still running (status code -1)
+        if (gameStatus.getValue() != -1) {
+          String title = "";
+          String message = "";
+          switch (gameStatus.getValue()) {
+            // player 1 is winner
+            case 0:
+              // because of status code we know player 1 is human, no need to check just increment win
+              ((HumanPlayer) players.players[0]).addWin();
+
+              // check if player 2 is human, if so increment loss
+              if (players.players[1].isHuman())
+                ((HumanPlayer) players.players[1]).addLoss();
+
+              // set modal message to Congratulate player
+              title = "Tic Tac Toe - Winner!";
+              message = "Congratulations " + players.players[0].getName() + ", You Won!";
+              break;
+
+            // player 2 is the winner
+            case 1:
+              // check if player 1 is human, if so increment loss
+              if (players.players[1].isHuman())
+                ((HumanPlayer) players.players[0]).addLoss();
+
+              // because of status code we know player 2 is human, no need to check just increment win
+              ((HumanPlayer) players.players[1]).addWin();
+
+              // set modal message to Congratulate player
+              title = "Tic Tac Toe - Winner!";
+              message = "Congratulations " + players.players[0].getName() + ", You Won!";            
+
+              break;   
+            
+            // a computer player won
+            case 2:
+              // check if opposite player is human, if so increment their losses
+              if (players.players[players.oppositePlayer()].isHuman()) 
+                ((HumanPlayer) players.players[players.oppositePlayer()]).addLoss();
+
+              // set modal window to consul loser
+              title = "Tic Tac Toe - Sorry!";
+              message = "Sorry " + players.players[players.oppositePlayer()].getName() + ", You Lost!";
+              break;
+
+            // there was a tie
+            case 3:
+              // check both players if they are human, if so increment ties
+              if (players.players[0].isHuman())
+                ((HumanPlayer) players.players[0]).addTie();
+              if (players.players[1].isHuman())
+                ((HumanPlayer) players.players[1]).addTie();
+
+              // set modal message to display tie
+              title = "Tic Tac Toe - Tie!";
+              message = "The Game Was a Tie!";
+          }
+
+          // Update displayed scores
+          player1ScoresPane.updateScores();
+          player2ScoresPane.updateScores();
+
+          // Save scores of human players
+          try {
+            if(players.players[0].isHuman())
+              FileActions.savePlayer((HumanPlayer) players.players[0]);
+            if(players.players[1].isHuman())
+              FileActions.savePlayer((HumanPlayer) players.players[1]);
+          } catch (IOException ex) {
+            ex.printStackTrace();
+          }
+
+          // Display modal window
+          Modal modal = new Modal(title, message);
+
+        }
+      }
+   });
 
   }
 }
