@@ -5,7 +5,7 @@
  */
 public class AI {
   public static final int MAX_DIFFICULTY = 2;
-  public static void takeTurn(Board board, Players players) {
+  public static int[] takeTurn(Board board, Players players) {
     // Get the difficulty level of current computer player
     int difficulty = ((ComputerPlayer) (players.players[players.currentPlayer()])).getDifficulty();
 
@@ -24,35 +24,42 @@ public class AI {
     // Check if middle square is owned, if not take it (medium/hard)
     if (checkMiddle(board) && difficulty > 0) {
       board.setOwner(player, 1, 1);
+      return new int[] {1,1};
     // if player can win on this move, go for win (hard)
     } else if (canWin(board, player) != null && difficulty == 2) {
       int[] position = canWin(board, player);
-      board.setOwner(player, position[0], position[1]);   
+      board.setOwner(player, position[0], position[1]);  
+      return position; 
     // check if opponent can win on this move, if so block win (medium/hard)
     } else if (canWin(board, opponent) != null && difficulty > 0) {
       int[] position = canWin(board, opponent);
       board.setOwner(player, position[0], position[1]);
+      return position;
     } else {
       // randomly choose square (all)
-      easyTurn(board, player);
+      return easyTurn(board, player);
     }
 
   }
 
-  private static void easyTurn(Board board, int player) {
+  private static int[] easyTurn(Board board, int player) {
     // loop until random square is not taken 
     boolean taken = true;
+
+    int row = 0;
+    int col = 0;
+
     do {
       // get random row and column number
-      int row = (int) (Math.random() * 3);
-      int col = (int) (Math.random() * 3);
+      row = (int) (Math.random() * 3);
+      col = (int) (Math.random() * 3);
       if (board.isEmptyAt(row, col)) {
         board.setOwner(player, row, col);
         taken = false;
       }
 
     } while (taken);
-
+    return new int[] {row, col};
   }
   
   /** check if middle of board is open */
