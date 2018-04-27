@@ -27,6 +27,7 @@ public class TicTacToe extends Application {
   // Initialize board squares
   public SquarePane[][] squares = new SquarePane[3][3];
 
+  // create a variable to monitor game status
   public IntegerProperty gameStatus = new SimpleIntegerProperty(-1);
 
   /** Main entry point into application */
@@ -165,6 +166,7 @@ public class TicTacToe extends Application {
     Scene scnIntro = new Scene(pnIntro, 300, 500);
     introStage.setTitle("Welcome to Tic Tac Toe");
     introStage.setScene(scnIntro);
+    introStage.setResizable(false);
     introStage.show();
     
 
@@ -246,6 +248,13 @@ public class TicTacToe extends Application {
 
           // Display modal window
           Modal modal = new Modal(title, message);
+
+          // If user clicks play again, reset the game
+          modal.getBtnPlay().setOnAction( e -> {
+            // TODO: implement game resetting
+
+          });
+
 
         }
       }

@@ -14,6 +14,9 @@ import javafx.stage.Stage;
  * @author Randy Layne
  */
 public class Modal extends Stage {
+  // make play again button a field so button event can be accessed by caller
+  private Button btnPlay;
+
   public Modal(String title, String message) {
     // create and style elements to display message
     Text messageText = new Text(message);
@@ -22,7 +25,7 @@ public class Modal extends Stage {
     StackPane messagePane = new StackPane(messageText);
 
     // create "play again" and "quit" buttons 
-    Button btnPlay = new Button("Play Again");
+    btnPlay = new Button("Play Again");
     Button btnQuit = new Button("Quit");
 
     btnPlay.setOnAction(e -> {
@@ -47,8 +50,17 @@ public class Modal extends Stage {
     Scene scene = new Scene(borderPane, 400, 250);
     setScene(scene);
     setTitle(title);
+    setAlwaysOnTop(true);
+    setResizable(false);
 
     // self show stage after construction
     show();
+  }
+
+  /**
+   * @return the btnPlay
+   */
+  public Button getBtnPlay() {
+    return btnPlay;
   }
 }

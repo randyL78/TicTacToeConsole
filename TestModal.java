@@ -9,6 +9,8 @@ public class TestModal extends Application {
   @Override
   public void start(Stage primaryStage) throws Exception {
     Modal messageModal = new Modal("Modal","Hi, I'm a modal!");
-    messageModal.show(); 
+    messageModal.getBtnPlay().setOnAction(e -> {
+      messageModal.close();
+    });
   }
 }
