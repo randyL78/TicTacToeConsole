@@ -232,6 +232,7 @@ public class TicTacToe extends Application {
               message = "The Game Was a Tie!";
           }
 
+          
           // Update displayed scores
           player1ScoresPane.updateScores();
           player2ScoresPane.updateScores();
@@ -251,7 +252,25 @@ public class TicTacToe extends Application {
 
           // If user clicks play again, reset the game
           modal.getBtnPlay().setOnAction( e -> {
-            // TODO: implement game resetting
+            // close modal window
+            modal.close();
+
+            // Clear board data
+            board.clear();
+
+            // set turn to player 1
+            if (!players.isFirstPlayerTurn())
+              players.flip();
+
+            // Clear gridPane Squares
+            for (int i = 0; i < 3; i++) {
+              for (int j = 0; j < 3; j++) {
+                squares[i][j].clear();
+              }
+            }
+
+            // Reset game status to -1
+            gameStatus.setValue(-1);
 
           });
 
@@ -259,7 +278,7 @@ public class TicTacToe extends Application {
         }
       }
    });
-
+   
   }
 }
 

@@ -77,4 +77,9 @@ public class SquarePane extends StackPane {
     symbol.setFont(Font.font(Font.getDefault().toString(), FontWeight.EXTRA_BOLD, 70));
     getChildren().add(symbol);
   }
+
+  /** clear the square for a new game */
+  public void clear() {
+    getChildren().clear();
+  }
 }
