@@ -28,7 +28,7 @@ public class SquarePane extends StackPane {
     this.row = row;
     this.col = col;
     this.game = game;
-    setStyle("-fx-border-color: blue");
+    setStyle("-fx-border-color: blue; -fx-border-width: 5");
     setPrefSize(300, 300);
     setOnMouseClicked(e -> handleClick());
   }

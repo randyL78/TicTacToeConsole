@@ -8,7 +8,14 @@ import javafx.geometry.Insets;
  * @author Randy Layne
  */
 public class ScoresPane extends VBox {
+  private Player player;
+  private Text winsText;
+  private Text lossesText;
+  private Text tiesText;
+
   public ScoresPane(Player player) {
+    this.player = player;
+
     // Display name
     Text nameText = new Text(player.getName());
     nameText.setFont(Font.font("Times New Roman", FontWeight.BOLD, 32));
@@ -18,13 +25,13 @@ public class ScoresPane extends VBox {
       // Display scores of human players
       // Wins
       Text winsLabel = new Text("Wins:");
-      Text winsText = new Text("" + ((HumanPlayer) player).getWins());
+      winsText = new Text("" + ((HumanPlayer) player).getWins());
       // Losses
       Text lossesLabel = new Text("Losses:");
-      Text lossesText = new Text("" + ((HumanPlayer) player).getLosses());
+      lossesText = new Text("" + ((HumanPlayer) player).getLosses());
       // Ties
       Text tiesLabel = new Text("Ties:");
-      Text tiesText = new Text("" + ((HumanPlayer) player).getTies());
+      tiesText = new Text("" + ((HumanPlayer) player).getTies());
 
       getChildren().addAll(winsLabel, winsText, lossesLabel, lossesText, tiesLabel, tiesText);
     } 
@@ -34,5 +41,15 @@ public class ScoresPane extends VBox {
     setSpacing(5);
     setPadding(new Insets(5, 10, 0, 10));
     setMinWidth(170);
+  }
+
+  /** Updates the displayed scores for the player */
+  public void updateScores() {
+    // verify player is human before attempting to convert
+    if (player.isHuman()) {
+      winsText.setText("" + ((HumanPlayer) player).getWins());
+      lossesText.setText("" + ((HumanPlayer) player).getLosses());
+      tiesText.setText("" + ((HumanPlayer) player).getTies());
+    }  
   }
 }
