@@ -5,6 +5,8 @@ import javafx.scene.layout.*;
 import javafx.geometry.*;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 
 
 /**
@@ -19,8 +21,9 @@ public class TicTacToe extends Application {
   private Board board = new Board();
 
   // Initialize board squares
-  private SquarePane[][] squares = new SquarePane[3][3];
+  public SquarePane[][] squares = new SquarePane[3][3];
 
+  public IntegerProperty gameStatus = new SimpleIntegerProperty(-1);
 
   /** Main entry point into application */
   @Override
@@ -43,13 +46,6 @@ public class TicTacToe extends Application {
     GridPane boardPane = new GridPane();
     pnMain.setCenter(boardPane);
 
-
-    // add board squares
-    for (int i = 0; i < 3; i++) {
-      for (int j = 0; j < 3; j++) {
-        boardPane.add(squares[i][j] = new SquarePane(), j, i);
-      }
-    }
 
     // =========== bottom buttons =======================
     // Create quit button
@@ -135,6 +131,12 @@ public class TicTacToe extends Application {
       ScoresPane player2ScoresPane = new ScoresPane(players.players[1]);
       pnMain.setRight(player2ScoresPane);
    
+      // add board squares
+      for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+          boardPane.add(squares[i][j] = new SquarePane(board, players, i, j, this), j, i);
+        }
+      }
 
       // Show main screen and close intro screen
       primaryStage.show();
@@ -161,7 +163,12 @@ public class TicTacToe extends Application {
     introStage.setScene(scnIntro);
     introStage.show();
     
+
+   // Create an eventlistener for the gameover value
+
   }
 }
+
+
 
 
