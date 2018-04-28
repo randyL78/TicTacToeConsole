@@ -15,6 +15,7 @@ import javafx.beans.property.SimpleIntegerProperty;
  * TicTacToe
  * GUI version of TicTacToe
  * @Randy Layne
+ * Repository for this program is at https://github.com/randyL78/TicTacToeConsole/
  */
 public class TicTacToe extends Application {
   public Players players;

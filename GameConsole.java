@@ -58,13 +58,13 @@ public class GameConsole {
 
       } else if (playerType.toLowerCase().equals("computer")) {
         // creates a new computer player with selected difficulty
-        player2 = new ComputerPlayer(selectDifficulty());
+        player2 = new ComputerPlayer(selectDifficulty(input));
       } else {
         System.out.println("Invalid selection");
       }
     } while (player2 == null);
 
-    // Prompt use to select playing order
+    // Prompt user to select playing order
     while (true) {
       System.out.println("Would you like to go first? (Y/n) ");
       String answer = input.next();
@@ -82,7 +82,8 @@ public class GameConsole {
    * prompts user to select computer difficulty
    * @return the computer difficulty level
    */
-  private static int selectDifficulty() {
+  private static int selectDifficulty(Scanner input) {
+    // TODO: Prompt user to select difficulty level. For now, default to 2
     return 2;
   }
 
