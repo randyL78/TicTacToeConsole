@@ -2,3 +2,6 @@
 
 # Compliled class files
 *.class
+
+# Remove game save file so that each new download creates there own save game file
+saves.dat
