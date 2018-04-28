@@ -1,0 +1,4 @@
+## Git ignore file to eliminate environment specific files from repository
+
+# Compliled class files
+*.class
