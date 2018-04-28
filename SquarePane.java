@@ -44,10 +44,8 @@ public class SquarePane extends StackPane {
       setSymbol(currentPlayer);
 
      if (GameLogic.checkWin(board, currentPlayer)) {
-       System.out.println("Player won!");
        game.gameStatus.set(currentPlayer);
      } else if (GameLogic.checkTie(board)) {
-       System.out.println("There was a tie!");
        game.gameStatus.set(3);
      } else {
         // change player turn
@@ -59,10 +57,8 @@ public class SquarePane extends StackPane {
           game.squares[positionTaken[0]][positionTaken[1]].setSymbol(players.currentPlayer()); 
 
           if (GameLogic.checkWin(board, players.currentPlayer())) {
-            System.out.println("Computer won!");
             game.gameStatus.set(2);
           } else if (GameLogic.checkTie(board)) {
-            System.out.println("There was a tie!");
             game.gameStatus.set(3);
           }
           players.flip();
@@ -71,7 +67,7 @@ public class SquarePane extends StackPane {
     }  
   }
 
-  /** set the symbol based on which players turn it is */
+  /** set the symbol based on which player's turn it is */
   public void setSymbol(int currentPlayer) {
     Text symbol = new Text(currentPlayer == 0 ? "X" : "O");
     symbol.setFont(Font.font(Font.getDefault().toString(), FontWeight.EXTRA_BOLD, 70));
