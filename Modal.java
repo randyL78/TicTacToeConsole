@@ -12,6 +12,7 @@ import javafx.stage.Stage;
  * Modal
  * Displays a pop up message
  * @author Randy Layne
+ * TODO: Make class more generic to be able to reuse in other projects
  */
 public class Modal extends Stage {
   // make play again button a field so button event can be accessed by caller
@@ -23,6 +24,7 @@ public class Modal extends Stage {
     messageText.setFont(Font.font(24));
     messageText.setTextAlignment(TextAlignment.CENTER);
     StackPane messagePane = new StackPane(messageText);
+    messagePane.setPadding(new Insets(50, 25, 50, 25));
 
     // create "play again" and "quit" buttons 
     btnPlay = new Button("Play Again");
@@ -47,7 +49,7 @@ public class Modal extends Stage {
     borderPane.setBottom(buttonBox);
 
     // create scene and add to stage
-    Scene scene = new Scene(borderPane, 400, 250);
+    Scene scene = new Scene(borderPane);
     setScene(scene);
     setTitle(title);
     setAlwaysOnTop(true);
