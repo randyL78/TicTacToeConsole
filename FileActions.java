@@ -71,9 +71,6 @@ public class FileActions {
       ObjectInputStream input = new ObjectInputStream(new FileInputStream(FILE_NAME));
     ) {
 
-      // HumanPlayer humanPlayer = (HumanPlayer) input.readObject();
-      // players.add(humanPlayer);
-
 
       while(true) {
         HumanPlayer humanPlayer = (HumanPlayer) input.readObject();

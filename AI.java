@@ -4,7 +4,16 @@
  * @author Randy Layne
  */
 public class AI {
+  // ============== fields ========================
   public static final int MAX_DIFFICULTY = 2;
+
+  // ============== methods =======================
+  /**
+   * have the computer player make a turn
+   * @param board the current game board
+   * @param players the collection of current players
+   * @return an integer array with the row and column selected
+   */
   public static int[] takeTurn(Board board, Players players) {
     // Get the difficulty level of current computer player
     int difficulty = ((ComputerPlayer) (players.players[players.currentPlayer()])).getDifficulty();
@@ -41,7 +50,13 @@ public class AI {
     }
 
   }
-
+  
+  /**
+   *  have computer player select a random square 
+   * @param board the current game board
+   * @param players the collection of current players
+   * @return an integer array with the row and column selected
+   */
   private static int[] easyTurn(Board board, int player) {
     // loop until random square is not taken 
     boolean taken = true;
@@ -62,7 +77,11 @@ public class AI {
     return new int[] {row, col};
   }
   
-  /** check if middle of board is open */
+  /** 
+   * check if middle of board is open 
+   * @param board the current game board
+   * @return whether middle square is taken or not
+   */
   private static boolean checkMiddle(Board board) {
     if (board.isEmptyAt(1, 1)) {
       return true;
@@ -70,7 +89,13 @@ public class AI {
       return false;
   }
 
-  /** checks if given player can win on next move */
+  
+  /**
+   * checks if a given player can win on next move
+   * @param board the current game board
+   * @param players the collection of current players
+   * @return the square a player can win by taking, or null
+   */
   private static int[] canWin(Board board, int player) {
     for (int i = 0; i < 3; i++) {
       // check each row to see if player can win next turn
@@ -87,7 +112,12 @@ public class AI {
     return null;
   }
 
-  /** checks a given row for win on next move */
+  /** 
+   * checks a given row for win on next move
+   * @param board the current game board
+   * @param players the collection of current players
+   * @return the square a player can win by taking, or null
+   */
   private static int[] canRowWin(Board board, int player, int row) {
     // Store owner of each square in row in variables
     int sq0 = board.getOwner(row, 0);
@@ -106,7 +136,12 @@ public class AI {
     return null;
   }
 
-  /** checks a given column for win on next move */
+  /** 
+   * checks a given column for win on next move
+   * @param board the current game board
+   * @param players the collection of current players
+   * @return the square a player can win by taking, or null
+   */
   private static int[] canColumnWin(Board board, int player, int col) {
     // Store owner of each square in row in variables
     int sq0 = board.getOwner(0, col);
@@ -125,6 +160,12 @@ public class AI {
     return null;
   }
 
+  /** 
+   * checks the diagonals for a win on next turn
+   * @param board the current game board
+   * @param players the collection of current players
+   * @return the square a player can win by taking, or null
+   */
   private static int[] canDiagonalWin(Board board, int player) {
     // if player owns center, check open corners for win
     if (board.getOwner(1, 1) == player) {

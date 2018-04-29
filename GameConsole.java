@@ -83,8 +83,19 @@ public class GameConsole {
    * @return the computer difficulty level
    */
   private static int selectDifficulty(Scanner input) {
-    // TODO: Prompt user to select difficulty level. For now, default to 2
-    return 2;
+    int difficulty = -1;
+    // Prompt user to select difficulty
+    // Loop until user enters valid value
+    while(difficulty == -1) {
+      System.out.print("Please enter a opponent difficulty: (0 - " + AI.MAX_DIFFICULTY + " ");
+      int intValue = input.nextInt();
+      if (intValue >= 0 && intValue <= AI.MAX_DIFFICULTY)
+        difficulty = intValue;
+      else 
+        System.out.println("Invalid difficulty level");
+    }
+
+    return difficulty;
   }
 
   /** 

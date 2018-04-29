@@ -15,7 +15,7 @@ public class HumanPlayer extends Player implements Serializable {
    
   // ========= constructors =========
   public HumanPlayer() {
-    this("Player_" + ++count);
+    this("Player_" + (count + 1));
   }
 
   public HumanPlayer(String name) {

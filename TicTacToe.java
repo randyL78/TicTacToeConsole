@@ -18,7 +18,7 @@ import javafx.beans.property.SimpleIntegerProperty;
  * Repository for this program is at https://github.com/randyL78/TicTacToeConsole/
  */
 public class TicTacToe extends Application {
-  public Players players;
+  private Players players;
   private ScoresPane player1ScoresPane;
   private ScoresPane player2ScoresPane;
   
